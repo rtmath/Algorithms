@@ -34,14 +34,18 @@ function drawData(csv) {
   // If User specifies that a header is present, adjust the row offset where the loop starts grabbing data from
   var headerOffset = 0;
   var csvRowLength = csv[0].length;
-  var $csvRows = $("#csv-rows");
+  var $csvRows = document.getElementById("csv-rows");
   var numberOfCsvRows = csv.length;
   if (header) {
     headerOffset = 1;
     var headerRow = csv[0];
+    var $csvHeader = document.getElementById("csv-header");
     // Create CSV Headers
     for (var i = 0; i < csvRowLength; i++) {
-      $("#csv-header").append("<div>" + headerRow[i] + "</div>");
+      var newDiv = document.createElement("div");
+      var divContent = document.createTextNode(headerRow[i]);
+      newDiv.appendChild(divContent);
+      $csvHeader.append(newDiv);
     }
   }
 
@@ -49,8 +53,11 @@ function drawData(csv) {
   for (var i = 0 + headerOffset; i < numberOfCsvRows; i++) {
     var currentRow = csv[i];
     for (var j = 0; j < csvRowLength; j++) {
-      $csvRows.append("<span>" + currentRow[j] + "</span>");
+      var newSpan = document.createElement("span");
+      var spanContent = document.createTextNode(currentRow[j]);
+      newSpan.appendChild(spanContent);
+      $csvRows.append(newSpan);
     }
-    $csvRows.append("<br>");
+    $csvRows.append(document.createElement("br"));
   }
 }
