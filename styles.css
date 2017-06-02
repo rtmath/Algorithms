@@ -1,0 +1,20 @@
+#csv-header {
+  display: flex;
+}
+
+#csv-header > div {
+  width: 100px;
+  overflow: hidden;
+  margin-right: 5px;
+  color: red;
+  border-right: 1px solid black;
+}
+
+#csv-rows > span {
+  display: inline-block;
+  width: 100px;
+  overflow: hidden;
+  margin-right: 5px;
+  color: seagreen;
+  border-right: 1px solid black;
+}
