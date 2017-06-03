@@ -6,13 +6,47 @@
     <link href="styles.css" rel="stylesheet">
   </head>
   <body>
-    <h3>Algorithms</h3>
-    <input type="file" accept=".csv" onchange="handleFiles(this.files)">
+    <h3 style="text-align: center;">Algorithms</h3>
+    <div class="well">
+      <h3>Step 1: Choose Your CSV</h3>
+      <input type="file" accept=".csv" onchange="handleFiles(this.files)">
+      <input type="checkbox" checked="checked"><label>CSV Contains Header</label>
+    </div>
+
+    <div class="well">
+      <h3>Step 2: Choose Which Column To Process</h3>
+      <select>
+        <option>Employee ID</option>
+      </select>
+    </div>
+
+    <div class="well">
+      <h3>Step 3: Choose Your Algorithm</h3>
+      <div style="display: flex; flex-wrap: wrap;">
+        <span style="width: 50%">Worst case: O(n)</span>
+        <span style="width: 50%">Best case: O(1)</span>
+        <span style="width: 50%">Average Performance: O(n)</span>
+        <span style="width: 50%">Worst case space complexity: O(1) iterative</span>
+      </div>
+      <select>
+        <option selected disabled>-- Sorting Algorithms --</option>
+        <option>Bubble Sort</option>
+        <option>Merge Sort</option>
+      </select>
+    </div>
+
+    <div style="text-align: center; margin-top: 55px;">
+      <button>Run Performance Test</button>
+      <button>Export Transformed Dataset as CSV</button>
+    </div>
 
     <div id="csv-output">
       <div id="csv-header"></div>
       <div id="csv-rows"></div>
     </div>
+
+    <br>
+
     <script type="text/javascript" src="scripts.js"></script>
   </body>
 </html>

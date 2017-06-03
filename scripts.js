@@ -33,7 +33,8 @@ function processData(csv) {
 function drawData(csv) {
   // If User specifies that a header is present, adjust the row offset where the loop starts grabbing data from
   var headerOffset = 0;
-  var csvRowLength = csv[0].length;
+  // var csvRowLength = csv[0].length;
+  var csvRowLength = 10;
   var $csvRows = document.getElementById("csv-rows");
   var numberOfCsvRows = csv.length;
   if (header) {
@@ -61,3 +62,13 @@ function drawData(csv) {
     $csvRows.append(document.createElement("br"));
   }
 }
+
+// Linear Search
+// Set i to 0.
+// If Li = T, the search terminates successfully; return i.
+// Increase i by 1.
+// If i < n, go to step 2. Otherwise, the search terminates unsuccessfully.
+// Worst-case performance	O(n)
+// Best-case performance	O(1)
+// Average performance	O(n)
+// Worst-case space complexity	O(1) iterative
