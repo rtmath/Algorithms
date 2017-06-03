@@ -9,8 +9,8 @@
     <h3 style="text-align: center;">Algorithms</h3>
     <div class="well">
       <h3>Step 1: Choose Your CSV</h3>
-      <input type="file" accept=".csv" onchange="handleFiles(this.files)">
-      <input type="checkbox" checked="checked"><label>CSV Contains Header</label>
+      <input type="file" accept=".csv" onchange="loadFile(this.files)">
+      <input type="checkbox" checked="checked" onchange="toggleHeader()"><label>CSV Contains Header</label>
     </div>
 
     <div class="well">
@@ -46,7 +46,7 @@
     </div>
 
     <br>
-
+    <script type="text/javascript" src="algs.js"></script>
     <script type="text/javascript" src="scripts.js"></script>
   </body>
 </html>

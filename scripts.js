@@ -1,10 +1,24 @@
 // Bool for user to be able to select whether their csv contains a header or if it is raw data
 var header = true;
+var file = null;
 
-function handleFiles(files) {
+var testArray = [9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
+                 9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
+                 9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
+                 9, 1, 5, 17, 10, 2, 3, 4, 8, 10];
+console.log(testArray);
+var t1 = performance.now();
+var newArray = OptimizedBubbleSort.Run(testArray);
+var t2 = performance.now();
+console.log(newArray);
+console.log("Sort took " + (t2 - t1) + " ms");
+
+function loadFile(files) {
   // Check for FileReader browser support
+
   if (window.FileReader) {
-    getAsText(files[0]);
+    file = files[0];
+    getAsText(file);
   } else {
     alert("FileReader is not supported in this browser");
   }
@@ -28,6 +42,14 @@ function processData(csv) {
         lines.push(allTextLines.shift().split(','));
     }
 	drawData(lines);
+}
+
+function getColumns() {
+  
+}
+
+function toggleHeader() {
+  header = !header;
 }
 
 function drawData(csv) {
@@ -62,13 +84,3 @@ function drawData(csv) {
     $csvRows.append(document.createElement("br"));
   }
 }
-
-// Linear Search
-// Set i to 0.
-// If Li = T, the search terminates successfully; return i.
-// Increase i by 1.
-// If i < n, go to step 2. Otherwise, the search terminates unsuccessfully.
-// Worst-case performance	O(n)
-// Best-case performance	O(1)
-// Average performance	O(n)
-// Worst-case space complexity	O(1) iterative
