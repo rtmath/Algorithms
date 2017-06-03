@@ -7,7 +7,8 @@
   overflow: hidden;
   margin-right: 5px;
   color: red;
-  border-right: 1px solid black;
+  border-bottom: 2px solid black;
+  text-align: center;
 }
 
 #csv-rows > span {
@@ -16,7 +17,9 @@
   overflow: hidden;
   margin-right: 5px;
   color: seagreen;
-  border-right: 1px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  text-align: center;
 }
 
 .well {
@@ -34,4 +37,9 @@
 
 .hidden {
   display: none;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 55px;
 }

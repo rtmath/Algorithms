@@ -1,6 +1,11 @@
-// Bool for user to be able to select whether their csv contains a header or if it is raw data
 var header = true;
 var file = null;
+var csvArray = [];
+var sortedArray = [];
+var selectedColumn = null;
+var selectedColumnDataType = null;
+var selectedAlgo = null;
+var currentStep = 1;
 
 // var testArray = [9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
 //                  9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
@@ -16,6 +21,7 @@ var file = null;
 function loadFile(files) {
   // Check for FileReader browser support
   if (window.FileReader) {
+    csvArray.length = 0;
     getAsText(files[0]);
   } else {
     alert("FileReader is not supported in this browser");
@@ -42,33 +48,52 @@ function processData(csv) {
   file = lines;
 	// drawData(lines);
   show(document.getElementById("step2"));
-  getColumns();
+  currentStep = 2;
+  drawColumnOptions();
 }
 
-function getColumns() {
+function pushIntoArrayFromCSV() {
+  csvArray.length = 0;
+  var selectedCol = parseInt(selectedColumn);
+  var headerOffset = (header) ? 1 : 0;
+  // var fileLength = file.length;
+  var fileLength = 100;
+  if (selectedColumnDataType === "number") {
+    for (var i = 0 + headerOffset; i < fileLength; i++) {
+      value = file[i][selectedCol] || 0;
+      csvArray.push(parseFloat(value));
+    }
+  } else if (selectedColumnDataType === "string") {
+    for (var i = 0 + headerOffset; i < fileLength; i++) {
+      csvArray.push(file[i][selectedCol]);
+    }
+  }
+}
+
+//----- DOM Manipulation -----
+
+function drawColumnOptions() {
   var columnSelect = document.getElementById("columnSelect");
   if (header && file) {
     var headerRow = file[0];
     var rowLength = headerRow.length;
     for (var i = 0; i < rowLength; i++) {
       var option = document.createElement("option");
+      option.value = i;
       var optionText = document.createTextNode(headerRow[i]);
       option.appendChild(optionText);
       columnSelect.append(option);
     }
+  } else if (!header && file) {
+    var rowLength = file[0].length;
+    for (var i = 0; i < rowLength; i++) {
+      var option = document.createElement("option");
+      option.value = i;
+      var optionText = document.createTextNode(i);
+      option.appendChild(optionText);
+      columnSelect.append(option);
+    }
   }
-}
-
-function toggleHeader() {
-  header = !header;
-}
-
-function show(domElem) {
-    domElem.classList.remove("hidden");
-}
-
-function hide(domElem) {
-    domElem.classList.add("hidden");
 }
 
 function drawData(csv) {
@@ -101,5 +126,108 @@ function drawData(csv) {
       $csvRows.append(newSpan);
     }
     $csvRows.append(document.createElement("br"));
+  }
+}
+
+function drawDataFromColumn(array) {
+  var aLength = array.length;
+
+  if (header) {
+    var $csvHeader = document.getElementById("csv-header");
+    var newDiv = document.createElement("div");
+    var divContent = document.createTextNode(file[0][selectedColumn]);
+    newDiv.appendChild(divContent);
+    $csvHeader.append(newDiv);
+  }
+
+  var $csvRows = document.getElementById("csv-rows");
+  for (var i = 0; i < aLength; i++) {
+    var newSpan = document.createElement("span");
+    var spanContent = document.createTextNode(array[i]);
+    newSpan.appendChild(spanContent);
+    $csvRows.append(newSpan);
+    $csvRows.append(document.createElement("br"));
+  }
+}
+
+function drawAlgoData(algObj) {
+  var $worstCase = document.getElementById("worst-case");
+  var $bestCase = document.getElementById("best-case");
+  var $averagePerf = document.getElementById("average-perf");
+  var $spaceComp = document.getElementById("space-comp");
+  $worstCase.innerHTML = "Worst case: " + algObj.worstCase;
+  $bestCase.innerHTML = "Best case: " + algObj.bestCase;
+  $averagePerf.innerHTML = "Average performance: " + algObj.averagePerf;
+  $spaceComp.innerHTML = "Worst case space complexity: " + algObj.spaceComp;
+}
+
+//----- Helper Functions -----
+
+function toggleHeader() {
+  header = !header;
+}
+
+function show(domElem) {
+    domElem.classList.remove("hidden");
+}
+
+function hide(domElem) {
+    domElem.classList.add("hidden");
+}
+
+function updateSelectedColumn(event) {
+  selectedColumn = parseInt(event.target.value);
+  if (currentStep === 2) {
+    checkStep3Progression();
+  }
+}
+
+function updateSelectedColumnDataType(event) {
+  selectedColumnDataType = event.target.value;
+  if (currentStep === 2) {
+    checkStep3Progression();
+  }
+}
+
+function updateSelectedAlgo(event) {
+  selectedAlgo = event.target.value;
+  populateAlgoData(selectedAlgo);
+  if (currentStep === 3) {
+    show(document.getElementById("step4"));
+    currentStep = 4;
+  }
+}
+
+function populateAlgoData(algoName) {
+  switch(algoName) {
+    case "bubble":
+      drawAlgoData(BubbleSort);
+      return;
+    case "optbubble":
+      drawAlgoData(OptimizedBubbleSort);
+      return;
+    case "merge":
+      drawAlgoData(MergeSort);
+      return;
+  }
+}
+
+function runAlgo() {
+  switch(selectedAlgo) {
+    case "bubble":
+      sortedArray = BubbleSort.Run(csvArray);
+      break;
+    case "optbubble":
+      sortedArray = OptimizedBubbleSort.Run(csvArray);
+      break;
+  }
+  drawDataFromColumn(sortedArray);
+}
+
+function checkStep3Progression() {
+  if (selectedColumn && selectedColumnDataType) {
+    show(document.getElementById("step3"));
+    currentStep = 3;
+    pushIntoArrayFromCSV();
   }
 }

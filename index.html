@@ -15,34 +15,36 @@
 
     <div class="well hidden" id="step2">
       <h3>Step 2: Choose Column And Data Type</h3>
-      <select id="columnSelect">
+      <select id="columnSelect" onchange="updateSelectedColumn(event)">
         <option selected disabled>-- Column --</option>
       </select>
-      <select id="columnDatatype">
+      <select id="columnDatatype" onchange="updateSelectedColumnDataType(event)">
         <option selected disabled>-- Data Type --</option>
-        <option>Number</option>
-        <option>String</option>
+        <option value="number">Number</option>
+        <option value="string">String</option>
       </select>
+      <br>
+
     </div>
 
     <div class="well hidden" id="step3">
       <h3>Step 3: Choose Your Algorithm</h3>
       <div style="display: flex; flex-wrap: wrap;">
-        <span style="width: 50%">Worst case: O(n)</span>
-        <span style="width: 50%">Best case: O(1)</span>
-        <span style="width: 50%">Average Performance: O(n)</span>
-        <span style="width: 50%">Worst case space complexity: O(1) iterative</span>
+        <span id="worst-case" style="width: 50%">Worst case: </span>
+        <span id="best-case" style="width: 50%">Best case: </span>
+        <span id="average-perf" style="width: 50%">Average Performance: </span>
+        <span id="space-comp" style="width: 50%">Worst case space complexity: </span>
       </div>
-      <select>
+      <select id="selectedAlgorithm" onchange="updateSelectedAlgo(event)">
         <option selected disabled>-- Sorting Algorithms --</option>
-        <option>Bubble Sort</option>
-        <option>Merge Sort</option>
+        <option value="bubble">Bubble Sort</option>
+        <option value="optbubble">Optimized Bubble Sort</option>
       </select>
     </div>
 
-    <div id="step4" class="hidden" style="text-align: center; margin-top: 55px;">
-      <button>Run Performance Test</button>
-      <button>Export Transformed Dataset as CSV</button>
+    <div id="step4" class="hidden button-container">
+      <button onclick="runAlgo()">Run Performance Test</button>
+      <button disabled>Export Transformed Data as CSV</button>
     </div>
 
     <div id="csv-output">
@@ -51,6 +53,8 @@
     </div>
 
     <br>
+
+
     <script type="text/javascript" src="algs.js"></script>
     <script type="text/javascript" src="scripts.js"></script>
   </body>
