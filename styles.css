@@ -22,6 +22,10 @@
   text-align: center;
 }
 
+#csv-rows > span:last-of-type {
+  border-bottom: 2px solid black;
+}
+
 .well {
   width: 90%;
   min-height: 100px;
@@ -39,7 +43,7 @@
   display: none;
 }
 
-.button-container {
+.button-container, .performance-container {
   text-align: center;
-  margin-top: 55px;
+  margin-top: 25px;
 }

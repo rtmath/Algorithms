@@ -56,8 +56,7 @@ function pushIntoArrayFromCSV() {
   csvArray.length = 0;
   var selectedCol = parseInt(selectedColumn);
   var headerOffset = (header) ? 1 : 0;
-  // var fileLength = file.length;
-  var fileLength = 100;
+  var fileLength = file.length;
   if (selectedColumnDataType === "number") {
     for (var i = 0 + headerOffset; i < fileLength; i++) {
       value = file[i][selectedCol] || 0;
@@ -129,11 +128,13 @@ function drawData(csv) {
   }
 }
 
-function drawDataFromColumn(array) {
+function drawDataFromSortedArray() {
+  var array = sortedArray;
   var aLength = array.length;
 
   if (header) {
     var $csvHeader = document.getElementById("csv-header");
+    clearDomNode($csvHeader);
     var newDiv = document.createElement("div");
     var divContent = document.createTextNode(file[0][selectedColumn]);
     newDiv.appendChild(divContent);
@@ -141,6 +142,7 @@ function drawDataFromColumn(array) {
   }
 
   var $csvRows = document.getElementById("csv-rows");
+  clearDomNode($csvRows);
   for (var i = 0; i < aLength; i++) {
     var newSpan = document.createElement("span");
     var spanContent = document.createTextNode(array[i]);
@@ -213,15 +215,24 @@ function populateAlgoData(algoName) {
 }
 
 function runAlgo() {
+  var time, t0, t1;
+  sortedArray.length = 0;
   switch(selectedAlgo) {
     case "bubble":
+      t0 = performance.now();
       sortedArray = BubbleSort.Run(csvArray);
+      t1 = performance.now();
+      time = t1 - t0;
       break;
     case "optbubble":
+      t0 = performance.now();
       sortedArray = OptimizedBubbleSort.Run(csvArray);
+      t1 = performance.now();
+      time = t1 - t0;
       break;
   }
-  drawDataFromColumn(sortedArray);
+  var container = document.getElementById("performance-container");
+  container.innerHTML = "Time to apply algorithm to column: " + time + " milliseconds";
 }
 
 function checkStep3Progression() {
@@ -230,4 +241,15 @@ function checkStep3Progression() {
     currentStep = 3;
     pushIntoArrayFromCSV();
   }
+}
+
+function clearDomNode(domElem) {
+  while (domElem.firstChild) {
+    domElem.removeChild(domElem.firstChild);
+  }
+}
+
+function clearDisplayedData() {
+  clearDomNode(document.getElementById("csv-header"));
+  clearDomNode(document.getElementById("csv-rows"));
 }
