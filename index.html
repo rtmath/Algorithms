@@ -7,20 +7,25 @@
   </head>
   <body>
     <h3 style="text-align: center;">Algorithms</h3>
-    <div class="well">
+    <div class="well" id="step1">
       <h3>Step 1: Choose Your CSV</h3>
       <input type="file" accept=".csv" onchange="loadFile(this.files)">
       <input type="checkbox" checked="checked" onchange="toggleHeader()"><label>CSV Contains Header</label>
     </div>
 
-    <div class="well">
-      <h3>Step 2: Choose Which Column To Process</h3>
-      <select>
-        <option>Employee ID</option>
+    <div class="well hidden" id="step2">
+      <h3>Step 2: Choose Column And Data Type</h3>
+      <select id="columnSelect">
+        <option selected disabled>-- Column --</option>
+      </select>
+      <select id="columnDatatype">
+        <option selected disabled>-- Data Type --</option>
+        <option>Number</option>
+        <option>String</option>
       </select>
     </div>
 
-    <div class="well">
+    <div class="well hidden" id="step3">
       <h3>Step 3: Choose Your Algorithm</h3>
       <div style="display: flex; flex-wrap: wrap;">
         <span style="width: 50%">Worst case: O(n)</span>
@@ -35,7 +40,7 @@
       </select>
     </div>
 
-    <div style="text-align: center; margin-top: 55px;">
+    <div id="step4" class="hidden" style="text-align: center; margin-top: 55px;">
       <button>Run Performance Test</button>
       <button>Export Transformed Dataset as CSV</button>
     </div>

@@ -2,23 +2,21 @@
 var header = true;
 var file = null;
 
-var testArray = [9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
-                 9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
-                 9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
-                 9, 1, 5, 17, 10, 2, 3, 4, 8, 10];
-console.log(testArray);
-var t1 = performance.now();
-var newArray = OptimizedBubbleSort.Run(testArray);
-var t2 = performance.now();
-console.log(newArray);
-console.log("Sort took " + (t2 - t1) + " ms");
+// var testArray = [9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
+//                  9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
+//                  9, 1, 5, 17, 10, 2, 3, 4, 8, 10,
+//                  9, 1, 5, 17, 10, 2, 3, 4, 8, 10];
+// console.log(testArray);
+// var t1 = performance.now();
+// var newArray = OptimizedBubbleSort.Run(testArray);
+// var t2 = performance.now();
+// console.log(newArray);
+// console.log("Sort took " + (t2 - t1) + " ms");
 
 function loadFile(files) {
   // Check for FileReader browser support
-
   if (window.FileReader) {
-    file = files[0];
-    getAsText(file);
+    getAsText(files[0]);
   } else {
     alert("FileReader is not supported in this browser");
   }
@@ -41,15 +39,36 @@ function processData(csv) {
     while (allTextLines.length) {
         lines.push(allTextLines.shift().split(','));
     }
-	drawData(lines);
+  file = lines;
+	// drawData(lines);
+  show(document.getElementById("step2"));
+  getColumns();
 }
 
 function getColumns() {
-  
+  var columnSelect = document.getElementById("columnSelect");
+  if (header && file) {
+    var headerRow = file[0];
+    var rowLength = headerRow.length;
+    for (var i = 0; i < rowLength; i++) {
+      var option = document.createElement("option");
+      var optionText = document.createTextNode(headerRow[i]);
+      option.appendChild(optionText);
+      columnSelect.append(option);
+    }
+  }
 }
 
 function toggleHeader() {
   header = !header;
+}
+
+function show(domElem) {
+    domElem.classList.remove("hidden");
+}
+
+function hide(domElem) {
+    domElem.classList.add("hidden");
 }
 
 function drawData(csv) {

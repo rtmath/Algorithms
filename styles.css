@@ -31,3 +31,7 @@
   background-color: lightgrey;
   text-align: center;
 }
+
+.hidden {
+  display: none;
+}
