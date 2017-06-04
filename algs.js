@@ -1,13 +1,3 @@
-// Linear Search
-// Set i to 0.
-// If Li = T, the search terminates successfully; return i.
-// Increase i by 1.
-// If i < n, go to step 2. Otherwise, the search terminates unsuccessfully.
-// Worst-case performance	O(n)
-// Best-case performance	O(1)
-// Average performance	O(n)
-// Worst-case space complexity	O(1) iterative
-
 const LinearSearch = {
   worstCase: "O(n)",
   bestCase: "O(1)",
@@ -74,5 +64,46 @@ const OptimizedBubbleSort = {
       aLength = lastSwapPosition;
     }
     return array;
+  }
+}
+
+const TopDownMergeSort = {
+  worstCase: "O(n log n)",
+  bestCase: "O(n log n)",
+  averagePerf: "O(n log n)",
+  spaceComp: "O(n) auxiliary",
+  pseudocode: "",
+
+  Run(array) {
+    var aLength = array.length;
+    var copiedArray = [];
+    for (var i = 0; i < aLength; i++) {
+      copiedArray.push(array[i]);
+    }
+    this.SplitArray(copiedArray, array, 0, aLength);
+    return array;
+  },
+
+  SplitArray(array, copiedArray, start, end) {
+    if (end - start < 2) {
+      return;
+    }
+    var middle = Math.floor((end + start) / 2);
+    this.SplitArray(copiedArray, array, start, middle);
+    this.SplitArray(copiedArray, array, middle, end);
+    this.MergeArrays(array, copiedArray, start, middle, end);
+  },
+
+  MergeArrays(array, copiedArray, start, middle, end) {
+    var i = start, j = middle;
+    for (var k = start; k < end; k++) {
+      if (i < middle && (j >= end || array[i] <= array[j])) {
+        copiedArray[k] = array[i];
+        i = i + 1;
+      } else {
+        copiedArray[k] = array[j];
+        j = j + 1;
+      }
+    }
   }
 }

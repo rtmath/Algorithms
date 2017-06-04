@@ -13,7 +13,7 @@ var currentStep = 1;
 //                  9, 1, 5, 17, 10, 2, 3, 4, 8, 10];
 // console.log(testArray);
 // var t1 = performance.now();
-// var newArray = OptimizedBubbleSort.Run(testArray);
+// var newArray = TopDownMergeSort.Run(testArray);
 // var t2 = performance.now();
 // console.log(newArray);
 // console.log("Sort took " + (t2 - t1) + " ms");
@@ -208,8 +208,8 @@ function populateAlgoData(algoName) {
     case "optbubble":
       drawAlgoData(OptimizedBubbleSort);
       return;
-    case "merge":
-      drawAlgoData(MergeSort);
+    case "tdmerge":
+      drawAlgoData(TopDownMergeSort);
       return;
   }
 }
@@ -227,6 +227,12 @@ function runAlgo() {
     case "optbubble":
       t0 = performance.now();
       sortedArray = OptimizedBubbleSort.Run(csvArray);
+      t1 = performance.now();
+      time = t1 - t0;
+      break;
+    case "tdmerge":
+      t0 = performance.now();
+      sortedArray = TopDownMergeSort.Run(csvArray);
       t1 = performance.now();
       time = t1 - t0;
       break;
